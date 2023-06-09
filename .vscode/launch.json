@@ -1,0 +1,14 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Spring Boot-OauthClientApplication<oauth-client>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.hezf.oauthclient.OauthClientApplication",
+      "projectName": "oauth-client",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    }
+  ]
+}
