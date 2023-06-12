@@ -27,8 +27,6 @@ import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepo
 import org.springframework.security.oauth2.client.web.reactive.function.client.ServletOAuth2AuthorizedClientExchangeFilterFunction;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import com.hezf.oauthclient.authorization.DeviceCodeOAuth2AuthorizedClientProvider;
-
 /**
  * @author Joe Grandja
  * @author Steve Riesenberg
@@ -39,12 +37,10 @@ public class WebClientConfig {
 
 	@Bean
 	public WebClient webClient(OAuth2AuthorizedClientManager authorizedClientManager) {
-		ServletOAuth2AuthorizedClientExchangeFilterFunction oauth2Client =
-				new ServletOAuth2AuthorizedClientExchangeFilterFunction(authorizedClientManager);
+		ServletOAuth2AuthorizedClientExchangeFilterFunction oauth2Client = new ServletOAuth2AuthorizedClientExchangeFilterFunction(
+				authorizedClientManager);
 		// @formatter:off
-		return WebClient.builder()
-				.apply(oauth2Client.oauth2Configuration())
-				.build();
+		return WebClient.builder().apply(oauth2Client.oauth2Configuration()).build();
 		// @formatter:on
 	}
 
@@ -54,22 +50,16 @@ public class WebClientConfig {
 			OAuth2AuthorizedClientRepository authorizedClientRepository) {
 
 		// @formatter:off
-		OAuth2AuthorizedClientProvider authorizedClientProvider =
-				OAuth2AuthorizedClientProviderBuilder.builder()
-						.authorizationCode()
-						.refreshToken()
-						.clientCredentials()
-						.provider(new DeviceCodeOAuth2AuthorizedClientProvider())
-						.build();
+		OAuth2AuthorizedClientProvider authorizedClientProvider = OAuth2AuthorizedClientProviderBuilder.builder()
+		  .authorizationCode()
+			.refreshToken()
+			.build();
 		// @formatter:on
 
 		DefaultOAuth2AuthorizedClientManager authorizedClientManager = new DefaultOAuth2AuthorizedClientManager(
 				clientRegistrationRepository, authorizedClientRepository);
-		authorizedClientManager.setAuthorizedClientProvider(authorizedClientProvider);
 
-		// Set a contextAttributesMapper to obtain device_code from the request
-		authorizedClientManager.setContextAttributesMapper(DeviceCodeOAuth2AuthorizedClientProvider
-				.deviceCodeContextAttributesMapper());
+		authorizedClientManager.setAuthorizedClientProvider(authorizedClientProvider);
 
 		return authorizedClientManager;
 	}
