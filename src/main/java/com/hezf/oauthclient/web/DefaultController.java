@@ -37,8 +37,9 @@ public class DefaultController {
 	public String index(@AuthenticationPrincipal OAuth2User user) {
 
 		System.out.println("进入了 index");
-		System.out.println(user.getName().toString());
+		System.out.println(user.toString());
 		System.out.println(user.getAttribute("sub").toString());
+		System.out.println(user.getAttribute("myname").toString());
 
 		return "index";
 	}
