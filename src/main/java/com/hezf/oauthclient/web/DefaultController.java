@@ -15,6 +15,8 @@
  */
 package com.hezf.oauthclient.web;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -32,7 +34,12 @@ public class DefaultController {
 	}
 
 	@GetMapping("/index")
-	public String index() {
+	public String index(@AuthenticationPrincipal OAuth2User user) {
+
+		System.out.println("进入了 index");
+		System.out.println(user.getName().toString());
+		System.out.println(user.getAttribute("sub").toString());
+
 		return "index";
 	}
 
