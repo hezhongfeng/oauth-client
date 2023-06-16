@@ -7,8 +7,8 @@ logging:
     org:
       springframework:
         web: trace
-        security: trace
-        oauth2: info
+        security: info
+        oauth2: trace
 
 spring:
   thymeleaf:
@@ -22,7 +22,7 @@ spring:
             client-id: messaging-client
             client-secret: secret
             authorization-grant-type: authorization_code
-            redirect-uri: "http://127.0.0.1:8080/login/oauth2/code/{registrationId}"
+            redirect-uri: "http://127.0.0.1:8080/login/oauth2/code/messaging-client-oidcc"
             scope: openid, profile
             client-name: messaging-client-oidc
           messaging-client-authorization-code:

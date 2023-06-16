@@ -16,9 +16,11 @@
 package com.hezf.oauthclient.web;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @author Joe Grandja
@@ -34,12 +36,15 @@ public class DefaultController {
 	}
 
 	@GetMapping("/index")
-	public String index(@AuthenticationPrincipal OAuth2User user) {
+	public String index(@AuthenticationPrincipal OAuth2User user, @AuthenticationPrincipal OidcUser oidcUser) {
 
 		System.out.println("进入了 index");
 		System.out.println(user.toString());
 		System.out.println(user.getAttribute("sub").toString());
 		System.out.println(user.getAttribute("myname").toString());
+
+		System.out.println(oidcUser.getName());
+		System.out.println(oidcUser.toString());
 
 		return "index";
 	}
@@ -47,6 +52,14 @@ public class DefaultController {
 	@GetMapping("/logged-out")
 	public String loggedOut() {
 		return "logged-out";
+	}
+
+	@GetMapping("/login/oauth2/code/messaging-client-oidcc")
+	public String messagingClientOidcc(@RequestParam("code") String code, @RequestParam("state") String state) {
+		System.out.println("code 和 state");
+		System.out.println(code);
+		System.out.println(state);
+		return "redirect:/index";
 	}
 
 }
